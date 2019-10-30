@@ -2,34 +2,34 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: hello-world
+  name: hello-world-2
 spec:
   replicas: 5
   selector:
     matchLabels:
-      app: hello-world
+      app: hello-world-2
   template:
     metadata:
       labels:
-        app: hello-world
+        app: hello-world-2
     spec:
       containers:
       - image: "gpaul/hello-world-2@sha256:fc180e827c9d57637259fac98cd1b1685384c0d63d03c3f02e0b5a076bc635a0"
-        name: hello-world
+        name: hello-world-2
         ports:
         - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world
+  name: hello-world-2
 spec:
   type: LoadBalancer
   ports:
   - port: 80
     targetPort: 8080
   selector:
-    app: hello-world
+    app: hello-world-2
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -43,15 +43,15 @@ metadata:
     traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip
   generation: 1
   labels:
-    app.kubernetes.io/instance: hello-world
+    app.kubernetes.io/instance: hello-world-2
     app.kubernetes.io/managed-by: Tiller
-    app.kubernetes.io/name: hello-world
-  name: hello-world
+    app.kubernetes.io/name: hello-world-2
+  name: hello-world-2
 spec:
   rules:
   - http:
       paths:
       - backend:
-          serviceName: hello-world
+          serviceName: hello-world-2
           servicePort: 80
         path: /hello-world-2
